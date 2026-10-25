@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>മലയാളം - ക്ലാസ് 1 | യൂണിറ്റ് 9: വീട് കെട്ടണം ടിയാ ടിയാ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Manjari', sans-serif;
+            background-color: #fdf4ff;
+            color: #1e293b;
+            overflow-x: hidden;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .app-container {
+            max-width: 820px;
+            width: 100%;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding: 0;
+        }
+        .screen {
+            display: none;
+            padding: 16px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .screen.active { display: block; }
+
+        /* Headers & Buttons */
+        .header {
+            background: linear-gradient(135deg, #9333ea, #7e22ce);
+            color: white;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header h1 { font-size: 1.15rem; font-weight: 700; margin: 0; }
+        .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; cursor: pointer; padding: 6px 12px; border-radius: 8px; font-weight:bold; }
+
+        .btn-main {
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            width: 100%;
+            color: white;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-main:active { transform: translateY(4px); box-shadow: none; }
+
+        .read-btn {
+            background: linear-gradient(135deg, #9333ea, #7e22ce);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 3px 0 #6b21a8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .read-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        .btn-toggle {
+            background: #eab308;
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 0 #ca8a04;
+            margin-top: 8px;
+            width: 100%;
+        }
+        .btn-toggle:active { transform: translateY(2px); box-shadow: none; }
+
+        .btn-check {
+            background-color: #10b981; color: white; padding: 10px 18px; border-radius: 8px;
+            font-weight: bold; box-shadow: 0 3px 0 #059669; cursor: pointer; border: none;
+            margin-top: 12px; display: inline-block; width: 100%;
+        }
+        .btn-check:active { transform: translateY(3px); box-shadow: none; }
+
+        .category-card { background: #faf5ff; border: 2px solid #e9d5ff; border-radius: 16px; padding: 16px; margin-bottom: 18px; }
+        .category-title { font-size: 1.15rem; font-weight: 700; color: #6b21a8; margin-bottom: 14px; border-bottom: 2px dashed #d8b4fe; padding-bottom: 8px; }
+        .content-card { background-color: #ffffff; border: 2px solid #d8b4fe; border-radius: 14px; padding: 16px; margin-bottom: 14px; width: 100%; }
+
+        /* Item Cards for Games */
+        .item-card {
+            background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px;
+            padding: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer;
+            transition: all 0.2s; text-align: center;
+        }
+        .item-card.correct-item { background: #dcfce7 !important; border-color: #22c55e !important; color: #15803d; }
+        .item-card.wrong-item { background: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c; }
+
+        /* Letter Selection Buttons */
+        .letter-btn {
+            background: #f3e8ff; border: 2px solid #c084fc; color: #6b21a8;
+            font-weight: bold; font-size: 1.3rem; border-radius: 12px; padding: 10px 14px;
+            cursor: pointer; transition: all 0.2s; min-width: 55px; text-align: center;
+        }
+        .letter-btn.active-letter {
+            background: #7e22ce; color: #ffffff; border-color: #581c87;
+            transform: scale(1.08); box-shadow: 0 4px 10px rgba(126, 34, 206, 0.3);
+        }
+
+        /* Canvas */
+        .color-palette { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+        .color-swatch { width: 40px; height: 40px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer; }
+        .trace-canvas { border: 3px dashed #d8b4fe; border-radius: 16px; background: #ffffff; touch-action: none; cursor: crosshair; width: 100%; height: 320px; display: block; margin: 0 auto; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media print {
+            body { background: white; color: black; }
+            .no-print, .header, .back-btn, .btn-main, .read-btn, .btn-toggle, .btn-check { display: none !important; }
+            .app-container { max-width: 100%; box-shadow: none; }
+            .screen { display: block !important; padding: 0; }
+            #unitPaperPrintArea { display: block !important; }
+        }
+
+        /* Layout overflow fix – keep all Malayalam letters inside */
+        html, body { overflow-x: hidden; max-width: 100%; }
+        .app-container, .content-card, .category-card, .header, .header h1,
+        .btn-main, .item-card, .letter-btn, .song-text, p, .text-lg, .leading-relaxed {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+            word-wrap: break-word;
+            word-break: break-word;
+            box-sizing: border-box;
+        }
+        .read-btn.speaking {
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+            box-shadow: 0 3px 0 #991b1b !important;
+        }
+        .zoom-controls {
+            position: fixed;
+            bottom: 80px;
+            right: 12px;
+            z-index: 900;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .zoom-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: #9333ea;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+            cursor: pointer;
+        }
+        .zoom-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+<div class="app-container" id="appBody">
+
+    <!-- HOME SCREEN -->
+    <div id="homeScreen" class="screen active">
+        <div class="text-center mb-5 pt-3">
+            <h1 class="text-3xl font-bold text-purple-700 mb-1">മലയാളം - ക്ലാസ് 1</h1>
+            <p class="text-purple-600 font-bold text-lg mb-1">യൂണിറ്റ് 9: വീട് കെട്ടണം ടിയാ ടിയാ</p>
+            <p class="text-gray-600 font-semibold text-md mt-2 bg-white inline-block px-4 py-1 rounded-full border border-purple-200">Prepared by : Smart Vidya</p>
+        </div>
+
+        <!-- CATEGORY 1: 🎵 പാട്ടരങ്ങ് & കഥകൾ -->
+        <div class="category-card border-purple-200">
+            <h3 class="category-title text-purple-800">🎵 പാട്ടരങ്ങ് & കഥകൾ</h3>
+            <div class="flex flex-col gap-3">
+                <button class="btn-main bg-purple-600" onclick="showScreen('song1Screen')">🎶 വീട് കെട്ടണം ടിയാ ടിയാ (പാട്ട്)</button>
+                <button class="btn-main bg-fuchsia-600" onclick="showScreen('storyCakeScreen')">🍰 കേക്ക് കൊണ്ടൊരു വീട് (കഥ)</button>
+                <button class="btn-main bg-pink-600" onclick="showScreen('kitchenSongScreen')">🥘 അടുക്കളപ്പാട്ട്</button>
+                <button class="btn-main bg-purple-700" onclick="showScreen('bdaySongScreen')">🎂 പിറന്നാൾ മധുരം</button>
+            </div>
+        </div>
+
+        <!-- CATEGORY 2: 🎮 കളിക്കാം പഠിക്കാം -->
+        <div class="category-card border-blue-200" style="background:#eff6ff; border-color:#bfdbfe;">
+            <h3 class="category-title text-blue-800">🎮 പഠന ഗെയിമുകൾ & പ്രവർത്തനങ്ങൾ</h3>
+            <div class="flex flex-col gap-3">
+                <button class="btn-main bg-blue-600" onclick="showScreen('cakeGameScreen')">🍰 കേക്കുവീട്ടിൽ ഉണ്ടായവ കണ്ടെത്താം (ഗെയിം)</button>
+                <button class="btn-main bg-indigo-600" onclick="showScreen('favLinesScreen')">⭐ എനിക്കിഷ്ടപ്പെട്ട വരികൾ തിരഞ്ഞെടുക്കാം</button>
+                <button class="btn-main bg-sky-600" onclick="showScreen('houseTypesScreen')">🏠 വിവിധതരം വീടുകൾ (ഗെയിം)</button>
+                <button class="btn-main bg-teal-600" onclick="showScreen('kitchenWorkScreen')">🧹 വീട്ടുജോലികൾ തുല്യമായി ചെയ്യാം</button>
+            </div>
+        </div>
+
+        <!-- CATEGORY 3: 🧩 കടങ്കഥ & വരയ്ക്കാം -->
+        <div class="category-card border-amber-200" style="background:#fffbeb; border-color:#fde68a;">
+            <h3 class="category-title text-amber-800">🧩 കടങ്കഥ & വരയ്ക്കാം</h3>
+            <div class="flex flex-col gap-3">
+                <button class="btn-main bg-amber-600" onclick="showScreen('riddleScreen')">🧩 കടങ്കഥകൾ പറയാം, കണ്ടെത്താം</button>
+                <button class="btn-main bg-orange-600" onclick="showScreen('drawIdeasScreen'); initFreeDrawingCanvas();">🎨 വരയ്ക്കാം (സ്വന്തമായി ചിത്രം വരയ്ക്കാം)</button>
+            </div>
+        </div>
+
+        <!-- CATEGORY 4: 📝 അക്ഷരങ്ങളും ഉപകരണങ്ങളും -->
+        <div class="category-card border-emerald-200" style="background:#f0fdf4; border-color:#bbf7d0;">
+            <h3 class="category-title text-emerald-800">📝 അക്ഷരങ്ങളും ഉപകരണങ്ങളും</h3>
+            <div class="flex flex-col gap-3">
+                <button class="btn-main bg-emerald-600" onclick="showScreen('traceScreen'); initTracingCanvas();">🖌️ അക്ഷരങ്ങൾ എഴുതി പഠിക്കാം</button>
+                <button class="btn-main bg-green-600" onclick="showScreen('kitchenToolsGameScreen')">🍳 അടുക്കള ഉപകരണങ്ങൾ കണ്ടെത്താം</button>
+            </div>
+        </div>
+
+        <!-- CATEGORY 5: 🏆 പരീക്ഷാ കോർണർ -->
+        <div class="category-card border-red-200" style="background:#fef2f2; border-color:#fecaca;">
+            <h3 class="category-title text-red-800">🏆 പരീക്ഷാ കോർണർ</h3>
+            <div class="flex flex-col gap-3">
+                <button class="btn-main bg-red-600" onclick="showScreen('modelQuestionsScreen')">📋 മോഡൽ ചോദ്യങ്ങൾ</button>
+                <button class="btn-main bg-purple-700" onclick="showScreen('unitQuestionsScreen')">📄 യൂണിറ്റ് ചോദ്യങ്ങൾ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SONG 1: വീട് കെട്ടണം ടിയാ ടിയാ -->
+    <div id="song1Screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>വീട് കെട്ടണം ടിയാ ടിയാ</h1>
+        </div>
+        <div class="content-card text-center" style="background: #faf5ff;">
+            <p class="text-xl font-bold text-purple-700 mb-2">🎵 പാട്ടുപാടാം 🎵</p>
+
+            <div class="text-lg leading-relaxed text-gray-800 font-bold mb-4" id="song1Text">
+                മണ്ണ് കിളയ്ക്കണം ടിയാ ടിയാ<br>
+                മണ്ണ് കുഴയ്ക്കണം ടിയാ ടിയാ<br>
+                തറ ഒരുക്കണം ടിയാ ടിയാ<br>
+                തൂണ് നാട്ടണം ടിയാ ടിയാ<br>
+                ചുമര് കെട്ടണം ടിയാ ടിയാ<br>
+                മോന്തായം കെട്ടണം ടിയാ ടിയാ<br>
+                പുല്ല് വെട്ടണം ടിയാ ടിയാ<br>
+                മേൽക്കൂര മേയണം ടിയാ ടിയാ<br>
+                വാതിൽ വെയ്ക്കണം ടിയാ ടിയാ<br>
+                ജനൽ ഇടണം ടിയാ ടിയാ<br>
+                അടുക്കള പണിയണം ടിയാ ടിയാ<br>
+                മുറ്റം അടിക്കണം ടിയാ ടിയാ<br>
+                വീട് കെട്ടണം ടിയാ ടിയാ
+            </div>
+
+            <button class="read-btn" onclick="speakText('song1Text', this)">🔊 പാട്ട് കേൾക്കാം</button>
+            
+            <hr class="my-6 border-purple-200">
+
+            <div class="text-left bg-purple-50 p-4 rounded-xl border border-purple-200">
+                <p class="font-bold text-purple-900 mb-2">🏗️ വീടുപണിയുടെ ക്രമം (പഠന പ്രവർത്തനം):</p>
+                
+                <button class="btn-toggle" onclick="toggleElement('correctSongOrder')">👁️ വരികൾ കാണിക്കുക / മറയ്ക്കുക</button>
+
+                <div id="correctSongOrder" class="hidden mt-4 p-3 bg-white rounded-lg border border-yellow-400 text-purple-950 font-bold text-md leading-loose">
+                    1. മണ്ണ് കിളയ്ക്കണം ടിയാ ടിയാ<br>
+                    2. മണ്ണ് കുഴയ്ക്കണം ടിയാ ടിയാ<br>
+                    3. തറ ഒരുക്കണം ടിയാ ടിയാ<br>
+                    4. തൂണ് നാട്ടണം ടിയാ ടിയാ<br>
+                    5. ചുമര് കെട്ടണം ടിയാ ടിയാ<br>
+                    6. മോന്തായം കെട്ടണം ടിയാ ടിയാ<br>
+                    7. പുല്ല് വെട്ടണം ടിയാ ടിയാ<br>
+                    8. മേൽക്കൂര മേയണം ടിയാ ടിയാ<br>
+                    9. വാതിൽ വെയ്ക്കണം ടിയാ ടിയാ<br>
+                    10. ജനൽ ഇടണം ടിയാ ടിയാ<br>
+                    11. അടുക്കള പണിയണം ടിയാ ടിയാ<br>
+                    12. മുറ്റം അടിക്കണം ടിയാ ടിയാ<br>
+                    13. വീട് കെട്ടണം ടിയാ ടിയാ
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STORY: കേക്ക് കൊണ്ടൊരു വീട് -->
+    <div id="storyCakeScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>കേക്ക് കൊണ്ടൊരു വീട്</h1>
+        </div>
+        <div class="content-card space-y-4">
+            <div class="p-2">
+                <p class="text-lg leading-relaxed text-gray-800 font-bold" id="cakeFullStory">
+                    പാടിപ്പറക്കുമ്പോൾ പൂങ്കിളി ആ കാഴ്ച കണ്ടു.<br>
+                    ഭംഗിയുള്ള ഒരു വീട്.<br>
+                    മുറ്റം നിറയെ മഞ്ചാടിമണികൾ.<br>
+                    ചുറ്റും പാറിക്കളിക്കുന്ന മിന്നാമിന്നിദീപങ്ങൾ.<br>
+                    ജനാലകളും വാതിലുകളും അലങ്കരിച്ചിട്ടുണ്ട്.<br><br>
+
+                    “ഇവിടെ എന്താ വിശേഷം?” പൂങ്കിളി ചോദിച്ചു.<br>
+                    “ഇന്ന് എന്റെ പിറന്നാളാ.” വീട് പറഞ്ഞു.<br>
+                    “നിനക്ക് ഹൃദയം നിറഞ്ഞ പിറന്നാളാശംസകൾ.”<br>
+                    “താങ്ക്സ്.”<br>
+                    “ആട്ടവും പാട്ടും എല്ലാമുണ്ട്. പൂങ്കിളിയേ നീയും പങ്കുചേരണേ?”<br>
+                    “തീർച്ചയായും.”<br><br>
+
+                    ആദ്യം ഉറുമ്പുകൾ ജാഥയായി വന്നു.<br>
+                    ക്ഷണം കിട്ടിവന്ന മട്ടുണ്ട്.<br>
+                    “സ്വാഗതം, സ്വാഗതം.” വീട് പറഞ്ഞു.<br>
+                    ഉറുമ്പുകൾ അടിപൊളി സംഘഗാനം പാടി.<br>
+                    അതുവഴിയും ഇതുവഴിയും അകത്തു കയറി.<br>
+                    ചോണനുറുമ്പ് സോഫ നൊട്ടിനുണഞ്ഞു.<br>
+                    എന്താ സ്വാദ്!<br>
+                    നെയ്യുറുമ്പ് മേശ സ്വന്തമാക്കി.<br>
+                    എന്താ മധുരം!<br><br>
+
+                    “ഇതു വീടല്ല കേക്കാ.”<br>
+                    “ഇതു കേക്കല്ല വീടാ.”<br>
+                    “ഇത് കേക്കുവീടാ.”<br>
+                    ആദ്യം പറന്ന് എത്തിയ മൈന അടുക്കള കൊത്തി രുചിച്ചു.<br>
+                    സൂപ്പർ ഭക്ഷണം, സൂപ്പർ സ്വാദ്!<br>
+                    മയിൽ കിടപ്പുമുറിയിലേക്ക് തല നീട്ടി.<br>
+                    മിഠായി കൊണ്ടുള്ള തലയണ വായിലാക്കി.<br>
+                    നല്ല മിഠായി, നല്ല സ്വാദ്!<br>
+                    എന്നിട്ട് മനോഹരമായി നൃത്തം വച്ചു.<br>
+                    കണ്ടവർക്കെല്ലാം ആനന്ദം!<br><br>
+
+                    മുന്നിലൂടെ നായ വന്നു.<br>
+                    പിന്നിലൂടെ പൂച്ച വന്നു.<br>
+                    പിൻഭാഗത്തുനിന്നും പൂച്ച തിന്നുതുടങ്ങി.<br>
+                    “ഹായ്! പഞ്ചാരമധുരം.”<br>
+                    മുൻഭാഗത്തുനിന്നും നായ തിന്നുതുടങ്ങി.<br>
+                    “ഹായ്! തേൻമധുരം.”<br><br>
+
+                    “അകത്താളുണ്ടേ തിന്നല്ലേ തിന്നല്ലേ.”<br>
+                    ഉറുമ്പുകൾ ബഹളംവെച്ചു.<br>
+                    പുറത്തേക്ക് ചാടി.<br>
+                    അവ പൂച്ചയെ പൊതിഞ്ഞുകടിച്ചു.<br>
+                    കടിയുറുമ്പുകൾ നായയുടെ മുഖത്ത് കയറി.<br>
+                    മുഖമാകെ കടിയോടുകടി.<br>
+                    മൂക്കിലും ചിലത് കയറി.<br>
+                    ആയ് ച്ഛീ... ആയ് ച്ഛീ...<br>
+                    നായ ഒറ്റത്തുമ്മൽ.<br>
+                    പൂച്ചയും നീട്ടിയൊറ്റത്തുമ്മൽ.<br>
+                    മേൽക്കൂര കുലുങ്ങി കേക്കുവീട് ചിതറിത്തെറിച്ചു.
+                </p>
+            </div>
+            <button class="read-btn w-full" onclick="speakText('cakeFullStory', this)">🔊 മുഴുവൻ കഥയും കേൾക്കാം</button>
+        </div>
+    </div>
+
+    <!-- GAME 1: CAKE HOUSE ITEMS -->
+    <div id="cakeGameScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>കേക്ക് വീട്ടിൽ എന്തെല്ലാം ഉണ്ടായിരുന്നു?</h1>
+        </div>
+        <div class="content-card">
+            <p class="font-bold text-purple-900 mb-2 text-lg">തന്നിരിക്കുന്നവയിൽ കേക്കുമായി/കഥയുമായി ബന്ധപ്പെട്ടവ മാത്രം ക്ലിക്ക് ചെയ്ത് കണ്ടെത്തുക 🎯</p>
+
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="item-card" onclick="checkCakeItem(this, true, 'ഉറുമ്പ്')">🐜 ഉറുമ്പ്</div>
+                <div class="item-card" onclick="checkCakeItem(this, false, 'സിമന്റ്')">🧱 സിമന്റ്</div>
+                <div class="item-card" onclick="checkCakeItem(this, true, 'സോഫ')">🛋️ സോഫ</div>
+                <div class="item-card" onclick="checkCakeItem(this, false, 'വിമാനം')">✈️ വിമാനം</div>
+                <div class="item-card" onclick="checkCakeItem(this, true, 'മിഠായി തലയണ')">🍬 മിഠായി തലയണ</div>
+                <div class="item-card" onclick="checkCakeItem(this, false, 'ഇരുമ്പ് അഴികൾ')">⛓️ ഇരുമ്പ് അഴികൾ</div>
+                <div class="item-card" onclick="checkCakeItem(this, true, 'മയിൽ')">🦚 മയിൽ</div>
+                <div class="item-card" onclick="checkCakeItem(this, true, 'മഞ്ചാടിമണികൾ')">🔴 മഞ്ചാടിമണികൾ</div>
+                <div class="item-card" onclick="checkCakeItem(this, false, 'കമ്പ്യൂട്ടർ')">💻 കമ്പ്യൂട്ടർ</div>
+                <div class="item-card" onclick="checkCakeItem(this, true, 'പഞ്ചാരമധുരം')">🍯 പഞ്ചാരമധുരം</div>
+                <div class="item-card" onclick="checkCakeItem(this, false, 'റോഡ് ടൈൽസ്')">🪨 റോഡ് ടൈൽസ്</div>
+                <div class="item-card" onclick="checkCakeItem(this, true, 'നായയും പൂച്ചയും')">🐶🐱 നായയും പൂച്ചയും</div>
+            </div>
+
+            <div id="cakeGameResult" class="p-3 bg-purple-50 rounded-lg text-center font-bold text-purple-800">
+                കണ്ടെത്തിയവ: <span id="foundCount">0</span> / 7
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME 2: FAVORITE LINES -->
+    <div id="favLinesScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>എനിക്കിഷ്ടപ്പെട്ട വരികൾ</h1>
+        </div>
+        <div class="content-card">
+            <p class="font-bold text-purple-900 mb-2 text-lg">കഥയിലെ വരികളിൽ നിന്ന് നിങ്ങൾക്ക് ഇഷ്ടപ്പെട്ടവ ടിക്ക് ചെയ്ത് തിരഞ്ഞെടുക്കൂ ⭐</p>
+
+            <div class="space-y-3 mb-4">
+                <label class="flex items-start gap-3 p-3 border border-purple-200 rounded-xl bg-purple-50 cursor-pointer">
+                    <input type="checkbox" class="fav-line-cb w-6 h-6 mt-1 accent-purple-600" value="മുറ്റം നിറയെ മഞ്ചാടിമണികൾ. ചുറ്റും പാറിക്കളിക്കുന്ന മിന്നാമിന്നിദീപങ്ങൾ.">
+                    <span class="font-bold text-gray-800 leading-relaxed">"മുറ്റം നിറയെ മഞ്ചാടിമണികൾ. ചുറ്റും പാറിക്കളിക്കുന്ന മിന്നാമിന്നിദീപങ്ങൾ."</span>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-purple-200 rounded-xl bg-purple-50 cursor-pointer">
+                    <input type="checkbox" class="fav-line-cb w-6 h-6 mt-1 accent-purple-600" value="ചോണനുറുമ്പ് സോഫ നൊട്ടിനുണഞ്ഞു. എന്താ സ്വാദ്!">
+                    <span class="font-bold text-gray-800 leading-relaxed">"ചോണനുറുമ്പ് സോഫ നൊട്ടിനുണഞ്ഞു. എന്താ സ്വാദ്!"</span>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-purple-200 rounded-xl bg-purple-50 cursor-pointer">
+                    <input type="checkbox" class="fav-line-cb w-6 h-6 mt-1 accent-purple-600" value="മയിൽ കിടപ്പുമുറിയിലേക്ക് തല നീട്ടി. മിഠായി കൊണ്ടുള്ള തലയണ വായിലാക്കി.">
+                    <span class="font-bold text-gray-800 leading-relaxed">"മയിൽ കിടപ്പുമുറിയിലേക്ക് തല നീട്ടി. മിഠായി കൊണ്ടുള്ള തലയണ വായിലാക്കി."</span>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-purple-200 rounded-xl bg-purple-50 cursor-pointer">
+                    <input type="checkbox" class="fav-line-cb w-6 h-6 mt-1 accent-purple-600" value="പിൻഭാഗത്തുനിന്നും പൂച്ച തിന്നുതുടങ്ങി. ഹായ്! പഞ്ചാരമധുരം.">
+                    <span class="font-bold text-gray-800 leading-relaxed">"പിൻഭാഗത്തുനിന്നും പൂച്ച തിന്നുതുടങ്ങി. ഹായ്! പഞ്ചാരമധുരം."</span>
+                </label>
+            </div>
+
+            <button class="btn-check" onclick="showSelectedFavLines()">തിരഞ്ഞെടുത്ത വരികൾ കാണുക & കേൾക്കുക 🔊</button>
+
+            <div id="selectedFavDisplay" class="hidden mt-4 p-4 bg-yellow-50 border-2 border-yellow-300 rounded-xl">
+                <p class="font-bold text-yellow-900 mb-2">⭐ നിങ്ങൾ തിരഞ്ഞെടുത്ത് സംരക്ഷിച്ച വരികൾ:</p>
+                <div id="favLinesList" class="font-bold text-gray-800 space-y-2 text-md leading-relaxed"></div>
+                <button class="read-btn mt-3 w-full" onclick="speakText('favLinesList', this)">🔊 കേട്ട് പഠിക്കാം</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIDDLES SECTION (കടങ്കഥകൾ - കൂടുതല്‍ ഉള്‍പ്പെടുത്തി) -->
+    <div id="riddleScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>കടങ്കഥകൾ പറയാം, കണ്ടെത്താം</h1>
+        </div>
+        <div class="content-card space-y-4">
+            <p class="font-bold text-amber-900 mb-2 text-lg">യൂണിറ്റുമായി ബന്ധപ്പെട്ട രസകരമായ കടങ്കഥകൾ 🧩</p>
+
+            <div class="p-4 border-2 border-amber-200 rounded-xl bg-amber-50">
+                <p class="font-bold text-gray-900 text-lg mb-2">1. നാലുകാലിൽ നിൽക്കും, മേൽക്കൂരയുണ്ട്, കാറ്റും മഴയും തടയും. എന്താണ്?</p>
+                <button class="btn-toggle" onclick="toggleElement('ans1')">💡 ഉത്തരം കാണുക / മറയ്ക്കുക</button>
+                <p id="ans1" class="hidden mt-2 font-bold text-purple-700 text-lg">ഉത്തരം: വീട് 🏠</p>
+            </div>
+
+            <div class="p-4 border-2 border-amber-200 rounded-xl bg-amber-50">
+                <p class="font-bold text-gray-900 text-lg mb-2">2. തീയിലിട്ടാൽ തിളയ്ക്കും, പലതരം രുചികൾ കൂട്ടും. എന്താണ്?</p>
+                <button class="btn-toggle" onclick="toggleElement('ans2')">💡 ഉത്തരം കാണുക / മറയ്ക്കുക</button>
+                <p id="ans2" class="hidden mt-2 font-bold text-purple-700 text-lg">ഉത്തരം: അടുക്കളയിലെ കലം / കുക്കർ 🍲</p>
+            </div>
+
+            <div class="p-4 border-2 border-amber-200 rounded-xl bg-amber-50">
+                <p class="font-bold text-gray-900 text-lg mb-2">3. മധുരമുള്ള വീട്, ഉറുമ്പുകൾ ജാഥയായി വരുമേ? എന്താണ്?</p>
+                <button class="btn-toggle" onclick="toggleElement('ans3')">💡 ഉത്തരം കാണുക / മറയ്ക്കുക</button>
+                <p id="ans3" class="hidden mt-2 font-bold text-purple-700 text-lg">ഉത്തരം: കേക്കുവീട് 🍰</p>
+            </div>
+
+            <div class="p-4 border-2 border-amber-200 rounded-xl bg-amber-50">
+                <p class="font-bold text-gray-900 text-lg mb-2">4. മരപ്പൊത്തിലും നിലത്തും വീടുണ്ടാക്കും, കൂട്ടിന് കടിയും തരും. ആരാണവൻ?</p>
+                <button class="btn-toggle" onclick="toggleElement('ans4')">💡 ഉത്തരം കാണുക / മറയ്ക്കുക</button>
+                <p id="ans4" class="hidden mt-2 font-bold text-purple-700 text-lg">ഉത്തരം: ഉറുമ്പ് 🐜</p>
+            </div>
+
+            <div class="p-4 border-2 border-amber-200 rounded-xl bg-amber-50">
+                <p class="font-bold text-gray-900 text-lg mb-2">5. വെള്ളത്തിൽ കിടക്കും പക്ഷേ നീന്തില്ല, സഞ്ചരിക്കും വീടുപോലെ. എന്താണത്?</p>
+                <button class="btn-toggle" onclick="toggleElement('ans5')">💡 ഉത്തരം കാണുക / മറയ്ക്കുക</button>
+                <p id="ans5" class="hidden mt-2 font-bold text-purple-700 text-lg">ഉത്തരം: ഹൗസ് ബോട്ട് 🛥️</p>
+            </div>
+
+            <div class="p-4 border-2 border-amber-200 rounded-xl bg-amber-50">
+                <p class="font-bold text-gray-900 text-lg mb-2">6. പല്ലില്ലാത്ത മുത്തശ്ശിക്കും കുഞ്ഞിനും മധുരം തരുന്ന പൊതി എന്താണ്?</p>
+                <button class="btn-toggle" onclick="toggleElement('ans6')">💡 ഉത്തരം കാണുക / മറയ്ക്കുക</button>
+                <p id="ans6" class="hidden mt-2 font-bold text-purple-700 text-lg">ഉത്തരം: മിഠായിപ്പൊതി 🍬</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAWING BOARD SECTION (വരയ്ക്കാം - കളർ തിരഞ്ഞെടുത്ത് വരയ്ക്കാൻ ഓപ്ഷൻ) -->
+    <div id="drawIdeasScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>🎨 വരയ്ക്കാം (ചിത്രരചന)</h1>
+        </div>
+        <div class="content-card space-y-4 text-center">
+            <p class="font-bold text-orange-900 text-lg mb-1">നിങ്ങൾക്ക് ഇഷ്ടമുള്ള നിറങ്ങൾ തിരഞ്ഞെടുത്ത് ഇവിടെ ചിത്രം വരയ്ക്കൂ 🎨</p>
+            <p class="text-xs text-gray-600 mb-2 font-semibold font-bold">(വീട്, കേക്കുവീട്, ഉറുമ്പ്, മഞ്ചാടിമരങ്ങൾ തുടങ്ങിയവ ഇഷ്ടാനുസരണം വരയ്ക്കാം)</p>
+
+            <!-- Color Palette for Drawing -->
+            <div class="color-palette">
+                <div class="color-swatch" style="background:#1e293b" onclick="setFreeDrawColor('#1e293b')"></div>
+                <div class="color-swatch" style="background:#ef4444" onclick="setFreeDrawColor('#ef4444')"></div>
+                <div class="color-swatch" style="background:#3b82f6" onclick="setFreeDrawColor('#3b82f6')"></div>
+                <div class="color-swatch" style="background:#16a34a" onclick="setFreeDrawColor('#16a34a')"></div>
+                <div class="color-swatch" style="background:#eab308" onclick="setFreeDrawColor('#eab308')"></div>
+                <div class="color-swatch" style="background:#a855f7" onclick="setFreeDrawColor('#a855f7')"></div>
+            </div>
+
+            <!-- Free Drawing Canvas -->
+            <canvas id="freeDrawCanvas" class="trace-canvas"></canvas>
+
+            <div class="flex gap-2 mt-3">
+                <button class="btn-check" style="background-color: #ef4444;" onclick="clearFreeDrawCanvas()">🧹 ചിത്രം മായ്ക്കുക (Clear Canvas)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODEL QUESTIONS SCREEN WITH HIDE/SHOW MODEL ANSWERS -->
+    <div id="modelQuestionsScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>📋 മോഡൽ ചോദ്യങ്ങൾ</h1>
+        </div>
+        <div class="content-card space-y-4">
+            <p class="font-bold text-red-900 mb-2 text-lg">മോഡൽ ചോദ്യങ്ങളും ഉത്തരങ്ങളും 📋</p>
+
+            <div class="p-4 border-2 border-red-200 rounded-xl bg-red-50">
+                <p class="font-bold text-gray-900 text-md mb-1">ചോദ്യം 1: വീട് കെട്ടണം ടിയാ ടിയാ എന്ന പാട്ടിൽ മണ്ണ് കിളച്ചതിന് ശേഷം അടുത്തതായി എന്ത് ചെയ്യാനാണ് പറയുന്നത്?</p>
+                <button class="btn-toggle" onclick="toggleElement('mAns1')">💡 മോഡൽ ആ൯സർ കാണുക / മറയ്ക്കുക</button>
+                <div id="mAns1" class="hidden mt-3 p-3 bg-white rounded-lg border border-red-300 font-bold text-purple-900">
+                    മോഡൽ ആ൯സർ: മണ്ണ് കുഴയ്ക്കണം / തറ ഒരുക്കണം.
+                </div>
+            </div>
+
+            <div class="p-4 border-2 border-red-200 rounded-xl bg-red-50">
+                <p class="font-bold text-gray-900 text-md mb-1">ചോദ്യം 2: കേക്ക് വീട്ടിലേക്ക് ആദ്യം ജാഥയായി എത്തിയതാര്?</p>
+                <button class="btn-toggle" onclick="toggleElement('mAns2')">💡 മോഡൽ ആ൯സർ കാണുക / മറയ്ക്കുക</button>
+                <div id="mAns2" class="hidden mt-3 p-3 bg-white rounded-lg border border-red-300 font-bold text-purple-900">
+                    മോഡൽ ആ൯സർ: ഉറുമ്പുകൾ.
+                </div>
+            </div>
+
+            <div class="p-4 border-2 border-red-200 rounded-xl bg-red-50">
+                <p class="font-bold text-gray-900 text-md mb-1">ചോദ്യം 3: മഞ്ഞുകട്ടകൾ കൊണ്ടുണ്ടാക്കുന്ന വീടിന്റെ പേരെന്ത്?</p>
+                <button class="btn-toggle" onclick="toggleElement('mAns3')">💡 മോഡൽ ആ൯സർ കാണുക / മറയ്ക്കുക</button>
+                <div id="mAns3" class="hidden mt-3 p-3 bg-white rounded-lg border border-red-300 font-bold text-purple-900">
+                    മോഡൽ ആ൯സർ: ഇഗ്ലു (Igloo).
+                </div>
+            </div>
+
+            <div class="p-4 border-2 border-red-200 rounded-xl bg-red-50">
+                <p class="font-bold text-gray-900 text-md mb-1">ചോദ്യം 4: കേക്കുവീട്ടിലെ സോഫ നൊട്ടിനുണഞ്ഞത് ഏത് ഉറുമ്പാണ്?</p>
+                <button class="btn-toggle" onclick="toggleElement('mAns4')">💡 മോഡൽ ആ൯സർ കാണുക / മറയ്ക്കുക</button>
+                <div id="mAns4" class="hidden mt-3 p-3 bg-white rounded-lg border border-red-300 font-bold text-purple-900">
+                    മോഡൽ ആ൯സർ: ചോണനുറുമ്പ്.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNIT QUESTIONS SCREEN WITH PRINT / PDF OPTION -->
+    <div id="unitQuestionsScreen" class="screen">
+        <div class="header no-print">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>📄 യൂണിറ്റ് ചോദ്യങ്ങൾ</h1>
+        </div>
+
+        <div class="content-card space-y-4" id="unitPaperPrintArea">
+            <div class="text-center border-b pb-3">
+                <h2 class="text-2xl font-bold text-purple-800">യൂണിറ്റ് ചോദ്യപേപ്പർ (യൂണിറ്റ് 9)</h2>
+                <p class="font-bold text-gray-600">വിഷയം: മലയാളം | ക്ലാസ്: 1</p>
+            </div>
+
+            <div class="space-y-4 text-gray-900 font-bold">
+                <div class="p-3 bg-purple-50 border border-purple-200 rounded-xl">
+                    <p class="text-purple-900 font-bold mb-2">I. വരികൾ പൂർത്തിയാക്കുക:</p>
+                    <p class="ml-2 font-normal">1. വീട് കെട്ടണം ...............</p>
+                    <p class="ml-2 font-normal">2. പുല്ല് വെട്ടണം ...............</p>
+                </div>
+
+                <div class="p-3 bg-purple-50 border border-purple-200 rounded-xl">
+                    <p class="text-purple-900 font-bold mb-2">II. ഒറ്റവാക്കിൽ ഉത്തരം എഴുതുക:</p>
+                    <p class="ml-2 font-normal">1. കേക്കു വീട്ടിൽ മേശ സ്വന്തമാക്കിയ ഉറുമ്പ് ഏത്?</p>
+                    <p class="ml-2 font-normal">2. വെള്ളത്തിൽ ഒഴുകി നടക്കുന്ന വീടിന്റെ പേരെന്ത്?</p>
+                </div>
+
+                <div class="p-3 bg-purple-50 border border-purple-200 rounded-xl">
+                    <p class="text-purple-900 font-bold mb-2">III. ശരിയായ ഉത്തരം തിരഞ്ഞെടുക്കുക:</p>
+                    <p class="ml-2 font-normal">1. മരത്തിന് മുകളിൽ കെട്ടുന്ന വീട്: (ഇഗ്ലു / ഏറുമാടം)</p>
+                    <p class="ml-2 font-normal">2. കിടപ്പുമുറിയിലെ മിഠായി തലയണ വായിലാക്കിയത്: (മയിൽ / പൂച്ച)</p>
+                </div>
+
+                <div class="p-3 bg-purple-50 border border-purple-200 rounded-xl">
+                    <p class="text-purple-900 font-bold mb-2">IV. ലഘുപ്രവർത്തനം:</p>
+                    <p class="ml-2 font-normal">വീട്ടിലെ അടുക്കളപ്പണിയിൽ ആരെല്ലാം സഹായിക്കണം? രണ്ട് വരിയിൽ എഴുതുക.</p>
+                </div>
+            </div>
+
+            <button class="btn-check no-print bg-purple-700" onclick="window.print()">🖨️ ചോദ്യപേപ്പർ പ്രിന്റ് ചെയ്യുക / PDF ഡൗൺലോഡ് ചെയ്യുക</button>
+        </div>
+    </div>
+
+    <!-- HOUSE TYPES -->
+    <div id="houseTypesScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>വിവിധതരം വീടുകൾ - കണ്ടെത്താം</h1>
+        </div>
+        <div class="content-card space-y-4">
+            <p class="font-bold text-purple-900 mb-1 text-lg">വിവരണം വായിച്ച് അനുയോജ്യമായ വീട് ഏതാണെന്ന് ക്ലിക്ക് ചെയ്യുക 🎮</p>
+
+            <div class="p-3 border border-purple-200 rounded-xl bg-purple-50">
+                <p class="font-bold text-gray-800 mb-2">1. മഞ്ഞുകട്ടകൾ കൊണ്ട് നിർമ്മിക്കുന്ന വീട് ഏതാണ്?</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="item-card" onclick="checkHouseQuiz(this, true)">🧊 ഇഗ്ലു</button>
+                    <button class="item-card" onclick="checkHouseQuiz(this, false)">🛥️ ഹൗസ് ബോട്ട്</button>
+                </div>
+            </div>
+
+            <div class="p-3 border border-purple-200 rounded-xl bg-purple-50">
+                <p class="font-bold text-gray-800 mb-2">2. വെള്ളത്തിൽ ഒഴുകി നടക്കുന്ന വീട് ഏതാണ്?</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="item-card" onclick="checkHouseQuiz(this, false)">🏡 ഏറുമാടം</button>
+                    <button class="item-card" onclick="checkHouseQuiz(this, true)">🛥️ ഹൗസ് ബോട്ട്</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KITCHEN WORK EQUALITY -->
+    <div id="kitchenWorkScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>വീട്ടുജോലികൾ തുല്യമായി ചെയ്യാം</h1>
+        </div>
+        <div class="content-card">
+            <p class="font-bold text-purple-900 mb-2 text-lg">വീട്ടുജോലികളിൽ കുടുംബത്തിലെ എല്ലാവരും ഒത്തുചേർന്ന് പങ്കാളികളാകണം 🤝</p>
+
+            <div class="space-y-3">
+                <div class="p-3 border rounded-xl bg-gray-50">
+                    <p class="font-bold text-purple-900 mb-2">1. മുറ്റം അടിക്കൽ</p>
+                    <div class="flex flex-wrap gap-3 font-bold text-sm">
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" class="accent-purple-600 w-5 h-5"> അച്ഛൻ</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" class="accent-purple-600 w-5 h-5"> അമ്മ</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" class="accent-purple-600 w-5 h-5"> ഞാൻ</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" class="accent-purple-600 w-5 h-5"> ഏട്ടൻ/ചേച്ചി</label>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-purple-800 font-bold mt-4 bg-purple-100 p-3 rounded-lg leading-relaxed">💡 "അച്ഛൻ മുറ്റമടിച്ചാലും അമ്മ മുറ്റമടിച്ചാലും ഏട്ടൻ മുറ്റമടിച്ചാലും ചൂല് പിണങ്ങില്ല!" - എല്ലാവരും ഒത്തുചേർന്ന് ജോലികൾ തുല്യമായി പങ്കിടാം.</p>
+        </div>
+    </div>
+
+    <!-- KITCHEN SONG -->
+    <div id="kitchenSongScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>അടുക്കളപ്പാട്ട്</h1>
+        </div>
+        <div class="content-card text-center" style="background:#fff7ed;">
+            <p class="text-xl font-bold text-orange-700 mb-3">🥘 അടുക്കളപ്പാട്ട് 🥘</p>
+            <p class="text-lg leading-relaxed text-gray-800 font-bold mb-4" id="kitchenSongText">
+                അടുക്കിവയ്ക്കണം അടുക്കള<br>
+                ഒതുക്കിവയ്ക്കണം അടുക്കള<br>
+                അരച്ചിട്ടും പിന്നെ ചതച്ചിട്ടും<br>
+                വറുത്തിട്ടും പിന്നെ പൊടിച്ചിട്ടും<br>
+                കലക്കിയും പിന്നെ കുറുക്കിയും<br>
+                തിളപ്പിച്ചും പിന്നെ പതപ്പിച്ചും<br>
+                അടുക്കിയും പിന്നെ പെറുക്കിയും<br>
+                ചേറിയും പിന്നെ പാറ്റിയും<br>
+                കഴുകിയും പിന്നെ ഉണക്കിയും<br>
+                അടുപ്പമുള്ളവരാകുവാൻ നമ്മൾ<br>
+                അടുക്കളപ്പണി ചെയ്യണം.<br>
+                അടുക്കിവയ്ക്കണം അടുക്കള, നമ്മൾ<br>
+                ഒതുക്കിവയ്ക്കണം അടുക്കള!
+            </p>
+            <button class="read-btn" onclick="speakText('kitchenSongText', this)">🔊 പാട്ട് കേൾക്കാം</button>
+        </div>
+    </div>
+
+    <!-- BDAY SONG -->
+    <div id="bdaySongScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>പിറന്നാൾ മധുരം</h1>
+        </div>
+        <div class="content-card text-center">
+            <p class="text-lg leading-relaxed text-purple-900 font-bold mb-4" id="bdaySongText">
+                തെയ്ത തിന്തകത്തിന്താരാ. . .<br>
+                തിന്തകത്തിന്താരാ. . .<br>
+                വീടേ നിന്റെ പിറന്നാളിന്ന്<br>
+                കൂടെയുള്ളവരാരെല്ലാം?<br>
+                മിഠായിപ്പൊതി കെട്ടഴിയുമ്പോൾ<br>
+                കൈ നീട്ടുന്നവരാരെല്ലാം?<br>
+                വീട്ടിലുള്ളവരല്ലോ വീടിൻ<br>
+                കൂട്ടുകാരായ് മാറുന്നു
+            </p>
+            <button class="read-btn" onclick="speakText('bdaySongText', this)">🔊 പാട്ട് കേൾക്കാം</button>
+        </div>
+    </div>
+
+    <!-- TRACE LETTERS -->
+    <div id="traceScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>അക്ഷരങ്ങൾ എഴുതി പഠിക്കാം</h1>
+        </div>
+        <div class="content-card text-center">
+            <p class="font-bold text-purple-900 mb-1 text-lg">പാഠഭാഗത്തിലെ പ്രധാന അക്ഷരങ്ങൾ ക്ലിക്ക് ചെയ്ത് വരച്ച് പരിശീലിക്കൂ ✏️</p>
+            
+            <div class="flex flex-wrap justify-center gap-2 mb-4" id="letterSelector">
+                <button class="letter-btn active-letter" onclick="selectLetterToTrace('ടി', this)">ടി</button>
+                <button class="letter-btn" onclick="selectLetterToTrace('മോ', this)">മോ</button>
+                <button class="letter-btn" onclick="selectLetterToTrace('ചുമ', this)">ചുമ</button>
+                <button class="letter-btn" onclick="selectLetterToTrace('ഉറു', this)">ഉറു</button>
+                <button class="letter-btn" onclick="selectLetterToTrace('ക്ഷ', this)">ക്ഷ</button>
+                <button class="letter-btn" onclick="selectLetterToTrace('കേ', this)">കേ</button>
+            </div>
+
+            <div class="color-palette">
+                <div class="color-swatch" style="background:#7e22ce" onclick="setTraceColor('#7e22ce')"></div>
+                <div class="color-swatch" style="background:#ef4444" onclick="setTraceColor('#ef4444')"></div>
+                <div class="color-swatch" style="background:#3b82f6" onclick="setTraceColor('#3b82f6')"></div>
+                <div class="color-swatch" style="background:#16a34a" onclick="setTraceColor('#16a34a')"></div>
+            </div>
+
+            <canvas id="traceCanvas" class="trace-canvas"></canvas>
+
+            <div class="flex gap-2 mt-3">
+                <button class="btn-check" style="background-color: #3b82f6;" onclick="speakSelectedLetter()">🔊 ഉച്ചാരണം കേൾക്കാം</button>
+                <button class="btn-check" style="background-color: #ef4444;" onclick="resetTracingCanvas()">🧹 മായ്ക്കുക (Clear)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KITCHEN TOOLS DISCOVERY GAME -->
+    <div id="kitchenToolsGameScreen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('homeScreen')">⬅ തിരികെ</button>
+            <h1>അടുക്കള ഉപകരണങ്ങൾ കണ്ടെത്താം (ഗെയിം)</h1>
+        </div>
+        <div class="content-card">
+            <p class="font-bold text-purple-900 mb-2 text-lg">തന്നിരിക്കുന്നവയിൽ അടുക്കളയിലുള്ള ഉപകരണങ്ങൾ മാത്രം ക്ലിക്ക് ചെയ്ത് കണ്ടെത്തുക 🍳</p>
+
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="item-card" onclick="checkKitchenTool(this, true, 'പ്രഷർ കുക്കർ')">🍲 പ്രഷർ കുക്കർ</div>
+                <div class="item-card" onclick="checkKitchenTool(this, false, 'ക്ലാസ്സ് മുറി ഡെസ്ക്')">🏫 ക്ലാസ്സ് മുറി ഡെസ്ക്</div>
+                <div class="item-card" onclick="checkKitchenTool(this, true, 'മിക്സി')">⚙️ മിക്സി</div>
+                <div class="item-card" onclick="checkKitchenTool(this, true, 'ചട്ടകം')">🍳 ചട്ടകം</div>
+            </div>
+
+            <div id="toolsGameResult" class="p-3 bg-purple-50 rounded-lg text-center font-bold text-purple-800">
+                കണ്ടെത്തിയ അടുക്കള ഉപകരണങ്ങൾ: <span id="foundToolsCount">0</span> / 3
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+    <!-- Zoom controls -->
+    <div class="zoom-controls no-print">
+        <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
+        <button class="zoom-btn" onclick="zoomReset()" title="Reset" style="font-size:0.9rem;">1x</button>
+        <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+    </div>
+
+<script>
+    let foundCakeCount = 0;
+    let foundToolsCount = 0;
+    let currentSelectedLetter = 'ടി';
+    let currentColor = '#7e22ce';
+    let currentFreeDrawColor = '#1e293b';
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function toggleElement(id) {
+        const el = document.getElementById(id);
+        if (el.classList.contains('hidden')) {
+            el.classList.remove('hidden');
+        } else {
+            el.classList.add('hidden');
+        }
+    }
+
+
+    /* ========== ROBUST MALAYALAM TTS (model-style) ========== */
+    let ttsAudio = null, ttsToken = 0, ttsStopped = false, currentReadBtn = null, chosenVoice = null, audioUnlocked = false;
+
+    function pickMalayalamVoice() {
+        if (!('speechSynthesis' in window)) return null;
+        const voices = window.speechSynthesis.getVoices() || [];
+        const score = v => {
+            const n = (v.name || '').toLowerCase(), l = (v.lang || '').toLowerCase();
+            if (!l.startsWith('ml')) return 0;
+            if (/neural|natural|online|google|microsoft|sobhana|midhun|premium|samsung/.test(n)) return 5;
+            if (l === 'ml-in' || l === 'ml_in') return 4;
+            return 3;
+        };
+        let best = null, bestS = 0;
+        voices.forEach(v => { const s = score(v); if (s > bestS) { best = v; bestS = s; } });
+        return bestS >= 3 ? best : null;
+    }
+    function pickVoice() { chosenVoice = pickMalayalamVoice(); return chosenVoice; }
+    if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = pickVoice; } catch (e) {}
+    }
+
+    function unlockAudio() {
+        audioUnlocked = true;
+        try {
+            const a = document.getElementById('ttsPlayer');
+            if (a) {
+                a.playsInline = true; a.muted = true;
+                const p = a.play();
+                if (p && p.catch) p.catch(function () {});
+                setTimeout(function () { try { a.pause(); a.muted = false; a.removeAttribute('src'); } catch (e) {} }, 80);
+            }
+        } catch (e) {}
+        if ('speechSynthesis' in window) {
+            try { window.speechSynthesis.getVoices(); pickVoice(); if (window.speechSynthesis.paused) window.speechSynthesis.resume(); } catch (e) {}
+        }
+    }
+    document.addEventListener('touchstart', unlockAudio, { once: false, passive: true });
+    document.addEventListener('click', unlockAudio, true);
+
+    function getPlayer() {
+        var a = document.getElementById('ttsPlayer');
+        if (!a) {
+            a = document.createElement('audio');
+            a.id = 'ttsPlayer';
+            a.setAttribute('playsinline', 'true');
+            a.setAttribute('webkit-playsinline', 'true');
+            a.style.display = 'none';
+            document.body.appendChild(a);
+        }
+        return a;
+    }
+
+    function playSrc(src) {
+        return new Promise(function (resolve, reject) {
+            try {
+                var a = getPlayer();
+                var done = false;
+                var finish = function () { if (done) return; done = true; resolve(); };
+                a.onended = finish;
+                a.onerror = function () { if (!done) { done = true; reject(new Error('audio error')); } };
+                try { a.pause(); } catch (e) {}
+                a.src = src;
+                var p = a.play();
+                if (p && p.catch) p.catch(function () { if (!done) { done = true; reject(new Error('play failed')); } });
+                setTimeout(function () { if (!done) finish(); }, 45000);
+            } catch (e) { reject(e); }
+        });
+    }
+
+    function splitMlChunks(text, maxLen) {
+        const clean = String(text || '').replace(/\s+/g, ' ').trim();
+        if (!clean) return [];
+        if (clean.length <= maxLen) return [clean];
+        const parts = clean.split(/([।.!?…,;:\n\?])\s*/);
+        const out = []; let buf = '';
+        for (let i = 0; i < parts.length; i++) {
+            const p = parts[i];
+            if (!p) continue;
+            if ((buf + p).length <= maxLen) { buf += p; continue; }
+            if (buf) out.push(buf.trim());
+            if (p.length <= maxLen) { buf = p; continue; }
+            for (let k = 0; k < p.length; k += maxLen) out.push(p.slice(k, k + maxLen));
+            buf = '';
+        }
+        if (buf.trim()) out.push(buf.trim());
+        return out.filter(Boolean);
+    }
+
+    function googleUrls(text, tl) {
+        const q = encodeURIComponent(text);
+        return [
+            'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=' + tl + '&q=' + q,
+            'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=' + tl + '&q=' + q
+        ];
+    }
+
+    function speakViaSystem(text, onend) {
+        if (!('speechSynthesis' in window)) { if (onend) onend(); return; }
+        pickVoice();
+        var pieces = splitMlChunks(text, 180);
+        var i = 0;
+        function next() {
+            if (ttsStopped) { if (onend) onend(); return; }
+            if (i >= pieces.length) { if (onend) onend(); return; }
+            try { window.speechSynthesis.resume(); } catch (e) {}
+            var u = new SpeechSynthesisUtterance(pieces[i]);
+            u.lang = 'ml-IN';
+            u.rate = 0.68;
+            u.pitch = 1.0;
+            u.volume = 1.0;
+            var v = pickMalayalamVoice();
+            if (v) u.voice = v;
+            u.onend = function () { i++; next(); };
+            u.onerror = function () { i++; next(); };
+            try { window.speechSynthesis.speak(u); } catch (e) { i++; next(); }
+        }
+        next();
+    }
+
+    function playGoogleChunks(chunks, onend) {
+        var token = ttsToken;
+        var i = 0;
+        function next() {
+            if (ttsStopped || token !== ttsToken) { if (onend) onend(); return; }
+            if (i >= chunks.length) { if (onend) onend(); return; }
+            var urls = googleUrls(chunks[i], 'ml');
+            var u = 0;
+            function tryUrl() {
+                if (ttsStopped || token !== ttsToken) { if (onend) onend(); return; }
+                if (u >= urls.length) {
+                    speakViaSystem(chunks[i], function () { i++; next(); });
+                    return;
+                }
+                playSrc(urls[u]).then(function () { i++; next(); }).catch(function () { u++; tryUrl(); });
+            }
+            tryUrl();
+        }
+        next();
+    }
+
+    function stopSpeaking() {
+        ttsStopped = true;
+        ttsToken++;
+        try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+        try {
+            var a = document.getElementById('ttsPlayer');
+            if (a) { a.pause(); a.removeAttribute('src'); }
+            ttsAudio = null;
+        } catch (e) {}
+        if (currentReadBtn) {
+            currentReadBtn.classList.remove('speaking');
+            currentReadBtn.innerHTML = currentReadBtn.dataset.origLabel || '🔊 പാട്ട് കേൾക്കാം';
+            currentReadBtn = null;
+        }
+    }
+
+    // Pre-recorded / offline map (keys = exact text). Online Google TTS used as fallback.
+    // Long story uses PARA_CHUNKS for natural pacing.
+    window.PARA_CHUNKS = {
+        "പാടിപ്പറക്കുമ്പോൾ പൂങ്കിളി ആ കാഴ്ച കണ്ടു. ഭംഗിയുള്ള ഒരു വീട്. മുറ്റം നിറയെ മഞ്ചാടിമണികൾ. ചുറ്റും പാറിക്കളിക്കുന്ന മിന്നാമിന്നിദീപങ്ങൾ. ജനാലകളും വാതിലുകളും അലങ്കരിച്ചിട്ടുണ്ട്. “ഇവിടെ എന്താ വിശേഷം?” പൂങ്കിളി ചോദിച്ചു. “ഇന്ന് എന്റെ പിറന്നാളാ.” വീട് പറഞ്ഞു. “നിനക്ക് ഹൃദയം നിറഞ്ഞ പിറന്നാളാശംസകൾ.” “താങ്ക്സ്.” “ആട്ടവും പാട്ടും എല്ലാമുണ്ട്. പൂങ്കിളിയേ നീയും പങ്കുചേരണേ?” “തീർച്ചയായും.”": [
+            "പാടിപ്പറക്കുമ്പോൾ പൂങ്കിളി ആ കാഴ്ച കണ്ടു. ഭംഗിയുള്ള ഒരു വീട്.",
+            "മുറ്റം നിറയെ മഞ്ചാടിമണികൾ. ചുറ്റും പാറിക്കളിക്കുന്ന മിന്നാമിന്നിദീപങ്ങൾ. ജനാലകളും വാതിലുകളും അലങ്കരിച്ചിട്ടുണ്ട്.",
+            "ഇവിടെ എന്താ വിശേഷം? പൂങ്കിളി ചോദിച്ചു. ഇന്ന് എന്റെ പിറന്നാളാ. വീട് പറഞ്ഞു.",
+            "നിനക്ക് ഹൃദയം നിറഞ്ഞ പിറന്നാളാശംസകൾ. താങ്ക്സ്. ആട്ടവും പാട്ടും എല്ലാമുണ്ട്. പൂങ്കിളിയേ നീയും പങ്കുചേരണേ? തീർച്ചയായും."
+        ]
+    };
+
+    window.AUDIO_MAP = window.AUDIO_MAP || {};
+
+    function speakText(elementIdOrText, btn) {
+        try { unlockAudio(); } catch (e) {}
+        // Support toggle: if same button is speaking, stop
+        if (btn && btn.classList && btn.classList.contains('speaking')) {
+            stopSpeaking();
+            return;
+        }
+        stopSpeaking();
+        ttsStopped = false;
+        var token = ++ttsToken;
+
+        var el = document.getElementById(elementIdOrText);
+        var raw = el ? (el.innerText || el.textContent || '').trim() : String(elementIdOrText || '').trim();
+        raw = raw.replace(/\s+/g, ' ').trim();
+        if (!raw) return;
+
+        if (btn && btn.classList) {
+            currentReadBtn = btn;
+            btn.dataset.origLabel = btn.innerHTML;
+            btn.classList.add('speaking');
+            btn.innerHTML = '⏹ നിർത്തുക';
+        }
+
+        var map = window.AUDIO_MAP || {};
+        var paraChunks = window.PARA_CHUNKS || {};
+
+        function done() {
+            if (token !== ttsToken) return;
+            if (currentReadBtn) {
+                currentReadBtn.classList.remove('speaking');
+                currentReadBtn.innerHTML = currentReadBtn.dataset.origLabel || '🔊 പാട്ട് കേൾക്കാം';
+                currentReadBtn = null;
+            }
+        }
+
+        function playSeq(list, cb) {
+            var i = 0;
+            function next() {
+                if (ttsStopped || token !== ttsToken) { if (cb) cb(); return; }
+                if (i >= list.length) { if (cb) cb(); return; }
+                var ch = list[i++];
+                if (map[ch]) {
+                    playSrc(map[ch]).then(next).catch(function () {
+                        playGoogleChunks([ch], next);
+                    });
+                } else {
+                    playGoogleChunks([ch], next);
+                }
+            }
+            next();
+        }
+
+        // Exact map hit
+        if (map[raw]) {
+            playSrc(map[raw]).then(done).catch(function () {
+                if (token !== ttsToken) return;
+                playGoogleChunks(splitMlChunks(raw, 120), done);
+            });
+            return;
+        }
+        // PARA_CHUNKS
+        if (paraChunks[raw] && paraChunks[raw].length) {
+            playSeq(paraChunks[raw], done);
+            return;
+        }
+        // Chunked Google TTS (ml) then system fallback – slow natural Malayalam
+        var chunks = splitMlChunks(raw, 120);
+        if (!chunks.length) { done(); return; }
+        playGoogleChunks(chunks, done);
+    }
+
+    // Keep old call signature working: speakText('id') or speakText('id', this)
+    // Update onclick handlers via wrapper for buttons that pass only id
+    function speakSelectedLetter() {
+        speakText(currentSelectedLetter);
+    }
+
+    /* ========== ZOOM ========== */
+    let appZoom = 1;
+    function applyZoom() {
+        const app = document.querySelector('.app-container') || document.getElementById('appBody');
+        if (!app) return;
+        app.style.zoom = appZoom;
+        app.style.transform = 'scale(' + appZoom + ')';
+        app.style.transformOrigin = 'top center';
+    }
+    function zoomIn() {
+        appZoom = Math.min(1.8, appZoom + 0.12);
+        applyZoom();
+    }
+    function zoomOut() {
+        appZoom = Math.max(0.7, appZoom - 0.12);
+        applyZoom();
+    }
+    function zoomReset() {
+        appZoom = 1;
+        applyZoom();
+    }
+
+
+    function checkCakeItem(el, isCorrect, name) {
+        if (el.classList.contains('correct-item') || el.classList.contains('wrong-item')) return;
+        if (isCorrect) {
+            el.classList.add('correct-item');
+            foundCakeCount++;
+            document.getElementById('foundCount').innerText = foundCakeCount;
+            speakText(name + ' ശരിയാണ്');
+        } else {
+            el.classList.add('wrong-item');
+            speakText(name + ' കേക്ക് വീട്ടിൽ ഇല്ലായിരുന്നു');
+        }
+    }
+
+    function checkKitchenTool(el, isCorrect, name) {
+        if (el.classList.contains('correct-item') || el.classList.contains('wrong-item')) return;
+        if (isCorrect) {
+            el.classList.add('correct-item');
+            foundToolsCount++;
+            document.getElementById('foundToolsCount').innerText = foundToolsCount;
+            speakText(name + ' അടുക്കള ഉപകരണമാണ്');
+        } else {
+            el.classList.add('wrong-item');
+            speakText(name + ' അടുക്കള ഉപകരണമല്ല');
+        }
+    }
+
+    function showSelectedFavLines() {
+        const cbs = document.querySelectorAll('.fav-line-cb:checked');
+        const listDiv = document.getElementById('favLinesList');
+        const displayDiv = document.getElementById('selectedFavDisplay');
+
+        if (cbs.length === 0) {
+            alert('ദയവായി കുറഞ്ഞത് ഒരു വരിയെങ്കിലും തിരഞ്ഞെടുക്കൂ!');
+            return;
+        }
+
+        listDiv.innerHTML = '';
+        cbs.forEach((cb, idx) => {
+            let p = document.createElement('p');
+            p.className = 'bg-white p-2 rounded border border-yellow-300';
+            p.innerText = (idx + 1) + '. ' + cb.value;
+            listDiv.appendChild(p);
+        });
+
+        displayDiv.classList.remove('hidden');
+    }
+
+    function checkHouseQuiz(btn, isCorrect) {
+        if (isCorrect) {
+            btn.classList.add('correct-item');
+            speakText('ശരിയുത്തരം');
+        } else {
+            btn.classList.add('wrong-item');
+            speakText('തെറ്റായ ഉത്തരം');
+        }
+    }
+
+    function setTraceColor(c) { currentColor = c; }
+    function setFreeDrawColor(c) { currentFreeDrawColor = c; }
+
+    function selectLetterToTrace(letter, btn) {
+        currentSelectedLetter = letter;
+        document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active-letter'));
+        if (btn) btn.classList.add('active-letter');
+        drawLetterOutline();
+        speakSelectedLetter();
+    }
+
+    function speakSelectedLetter() {
+        speakText(currentSelectedLetter);
+    }
+
+    function drawLetterOutline() {
+        const canvas = document.getElementById('traceCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = 'bold 120px "Manjari", sans-serif';
+        ctx.fillStyle = '#e9d5ff';
+        ctx.strokeStyle = '#a855f7';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([6, 6]);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        ctx.fillText(currentSelectedLetter, canvas.width / 2, canvas.height / 2);
+        ctx.strokeText(currentSelectedLetter, canvas.width / 2, canvas.height / 2);
+        ctx.setLineDash([]);
+    }
+
+    function resetTracingCanvas() {
+        drawLetterOutline();
+    }
+
+    function clearFreeDrawCanvas() {
+        const canvas = document.getElementById('freeDrawCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function initTracingCanvas() {
+        const canvas = document.getElementById('traceCanvas');
+        if (!canvas) return;
+        canvas.width = canvas.offsetWidth || 320;
+        canvas.height = canvas.offsetHeight || 320;
+
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function getPos(e) {
+            let rect = canvas.getBoundingClientRect();
+            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function startDraw(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            let pos = getPos(e);
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            let pos = getPos(e);
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = 10;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.setLineDash([]);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function stopDraw() { isDrawing = false; }
+
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDraw);
+        canvas.addEventListener('touchstart', startDraw);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDraw);
+
+        drawLetterOutline();
+    }
+
+    function initFreeDrawingCanvas() {
+        const canvas = document.getElementById('freeDrawCanvas');
+        if (!canvas) return;
+        canvas.width = canvas.offsetWidth || 320;
+        canvas.height = canvas.offsetHeight || 320;
+
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function getPos(e) {
+            let rect = canvas.getBoundingClientRect();
+            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function startDraw(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            let pos = getPos(e);
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            let pos = getPos(e);
+            ctx.strokeStyle = currentFreeDrawColor;
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function stopDraw() { isDrawing = false; }
+
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDraw);
+        canvas.addEventListener('touchstart', startDraw);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDraw);
+    }
+</script>
+</body>
+</html>
